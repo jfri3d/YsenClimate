@@ -3,9 +3,9 @@ import logging
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
-from dotenv import load_dotenv
-
 from constants import INTERVAL
+from dotenv import load_dotenv
+from utils import update_inky
 
 load_dotenv(dotenv_path='.envrc')
 
@@ -14,14 +14,12 @@ logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=loggin
 scheduler = BlockingScheduler()
 
 
-@scheduler.scheduled_job(CronTrigger(minute='0/{}'.format(INTERVAL), hour='6-9', day='*', month='*', day_of_week='*'))
+@scheduler.scheduled_job(CronTrigger(minute='0/{}'.format(INTERVAL), hour='6-10', day='*', month='*', day_of_week='*'))
 def morning_trigger():
     func_name = inspect.stack()[0][3]
 
     logging.info('[{}] -> Starting Job'.format(func_name))
-
-    # TODO -> do something here!
-    pass
+    update_inky()
 
     logging.info("[{}] -> Done".format(func_name))
 
