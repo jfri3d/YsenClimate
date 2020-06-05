@@ -1,2 +1,3 @@
-# MorningWeather
-Morning weather panel with an InkyPHAT
+# YsenClimate
+Weather panel with an InkyPHAT
+
