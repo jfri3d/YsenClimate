@@ -1,1 +1,4 @@
-
+apscheduler
+python-dotenv
+Pillow
+inky
