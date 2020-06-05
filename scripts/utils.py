@@ -5,7 +5,6 @@ import requests
 from PIL import Image, ImageFont, ImageDraw
 from constants import ASSET_PATH, ICONS
 from dotenv import load_dotenv
-from font_fredoka_one import FredokaOne
 from inky import InkyPHAT
 
 load_dotenv(dotenv_path='.envrc')
@@ -13,7 +12,7 @@ load_dotenv(dotenv_path='.envrc')
 ACCUWEATHER_NAME = os.environ.get("ACCUWEATHER_NAME")
 ACCUWEATHER_KEY = os.environ.get("ACCUWEATHER_KEY")
 ACCUWEATHER_TOKEN = os.environ.get("ACCUWEATHER_TOKEN")
-
+FONT = './assets/Lobster_1.3.otf'
 
 def get_daily(loc_key):
     r = requests.get(
@@ -46,18 +45,7 @@ def get_weather():
         "HasPrecipitation": bool(current['HasPrecipitation']),
         "PrecipitationType": current['PrecipitationType'],
     }
-
-    # # format raw
-    # weather = {
-    #     "Temp": 14.1,
-    #     "MinTemp": -5.2,
-    #     "MaxTemp": 14.1,
-    #     "WeatherText": "Cloudy",
-    #     "WeatherIcon": 44,
-    #     "HasPrecipitation": False,
-    #     "PrecipitationType": None,
-    # }
-
+    
     return weather
 
 
@@ -96,12 +84,12 @@ def update_inky():
     # ======
 
     # include weather location
-    font = ImageFont.truetype(FredokaOne, 14)
+    font = ImageFont.truetype(FONT, 14)
     draw.text((2, 0), ACCUWEATHER_NAME, inky.BLACK, font)
 
     # include date/time of last "run"
     header = dt.now().strftime("%d.%m.%Y %H:%M")
-    font = ImageFont.truetype(FredokaOne, 14)
+    font = ImageFont.truetype(FONT, 14)
     w, h = font.getsize(header)
     draw.text((inky.WIDTH - w - 2, 0), header, inky.BLACK, font)
 
@@ -121,13 +109,13 @@ def update_inky():
 
     # add description
     message = data['WeatherText']
-    font = ImageFont.truetype(FredokaOne, 14)
+    font = ImageFont.truetype(FONT, 14)
     w, h = font.getsize(message)
     draw.text((edge, inky.HEIGHT - h - edge), message, inky.BLACK, font)
 
     # ADD THE TEMPERATURE
     # ===================
-    font = ImageFont.truetype(FredokaOne, 14)
+    font = ImageFont.truetype(FONT, 14)
 
     # add MIN temp data
     message = "{}°C".format(int(data['MinTemp']))
@@ -156,7 +144,7 @@ def update_inky():
 
     # add temp data
     message = "{}°C".format(int(data['Temp']))
-    font = ImageFont.truetype(FredokaOne, 32)
+    font = ImageFont.truetype(FONT, 32)
     w, h = font.getsize(message)
     draw.text((x_temp_line - w - 20, temp_y - h // 2), message, inky.YELLOW, font)
 
