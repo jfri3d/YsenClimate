@@ -14,7 +14,7 @@ logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=loggin
 scheduler = BlockingScheduler()
 
 
-@scheduler.scheduled_job(CronTrigger(minute='0', hour='5-23', day='*', month='*', day_of_week='*'))
+@scheduler.scheduled_job(CronTrigger(minute='0', hour='6-22', day='*', month='*', day_of_week='*'))
 def morning_trigger():
     func_name = inspect.stack()[0][3]
 
